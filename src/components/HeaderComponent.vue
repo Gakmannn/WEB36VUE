@@ -8,7 +8,28 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue'
+import { ref, onBeforeMount, onBeforeUpdate, onMounted, onUnmounted, onUpdated, onBeforeUnmount } from 'vue'
+
+console.log('created')
+
+onBeforeMount(()=>{
+  console.log('onBeforeMount')
+})
+onMounted(()=>{
+  console.log('onMounted')
+})
+onBeforeUpdate(()=>{
+  console.log('onBeforeUpdate')
+})
+onUpdated(()=>{
+  console.log('onUpdated')
+})
+onBeforeUnmount(()=>{
+  console.log('onBeforeUnmount')
+})
+onUnmounted(()=>{
+  console.log('onUnmounted')
+})
 
 const str = ref('Learn vue')
 const bool = ref(true)
