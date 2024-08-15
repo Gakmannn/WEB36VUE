@@ -1,27 +1,6 @@
 <template>
 
-  <div>
-    <div style="display:flex">
-      <button>1</button>
-      <button>2</button>
-      <button>3</button>
-    </div>
-    <div style="display:flex">
-      <button>4</button>
-      <button>5</button>
-      <button>6</button>
-    </div>
-    <div style="display:flex">
-      <button>7</button>
-      <button>8</button>
-      <button>9</button>
-    </div>
-    <div style="display:flex">
-      <button>.</button>
-      <button>0</button>
-    </div>
-  </div>
-
+  <VueCalc></VueCalc>
 
   <HeaderComp>
     <p>Вложенный тег</p>
@@ -35,15 +14,24 @@
   <HeaderComp v-if="toggle" />
 
   {{ a }}
-  <button @click="toggle=!toggle; a++" >{{ toggle?'hide':'show' }}</button>
+  <button @click="toggle=!toggle; a++">{{ toggle?'hide':'show' }}</button>
 
   <div v-html="html"></div>
 
   <textarea v-model="html" cols="30" rows="10"></textarea>
 
+  <hr>
+
+  <select v-model="select">
+    <option value="All">All</option>
+    <option value="Learn">Learn</option>
+    <option value="Read">Read</option>
+    <option value="Build">Build</option>
+  </select>
+
   <ul>
     <!-- <li v-for="todo, index of todos" :key="index">{{ todo.text }}</li> -->
-    <template v-for="todo, index of todos" :key="todo.id">
+    <template v-for="todo, index of filteredArr" :key="todo.id">
       <ToDoElement :todo="todo" :index="index" />
     </template>
   </ul>
@@ -52,18 +40,13 @@
 
 <script setup lang="ts">
 import ToDoElement from './components/ToDoElement.vue'
-import {ref} from 'vue'
+import VueCalc from './components/DelegatedCalc.vue'
+import {ref, computed, watch, onMounted, onBeforeUnmount} from 'vue'
 const color = null
 const html = ref(`<h1>HTML code</h1>`)
 
 const a = ref(0)
-
-// let key='apple'
-// console.log({
-//   [key]:5,
-//   key:0
-// })
-
+const select = ref('All')
 const toggle = ref(true)
 const message = ref('')
 const todos = ref([
@@ -72,6 +55,32 @@ const todos = ref([
   { id: 2, text: 'Learn Vue' },
   { id: 3, text: 'Build something awesome' }
 ])
+
+const filteredArr = ref([...todos.value])
+
+watch(()=>select.value, (oldVal, newVal)=>{
+  if (select.value == 'All') {
+    filteredArr.value = todos.value
+  } else {
+    filteredArr.value = todos.value.filter((el) => el.text.startsWith(select.value))
+  }
+})
+
+// const filteredArr = computed(()=>{
+//   if (select.value == 'All') {
+//     return todos.value
+//   } else {
+//     return todos.value.filter((el) => el.text.startsWith(select.value))
+//   }
+// })
+
+
+
+// let key='apple'
+// console.log({
+//   [key]:5,
+//   key:0
+// })
 
 message.value = 'Hello Vue!'
 
