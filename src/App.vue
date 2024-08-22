@@ -1,6 +1,16 @@
 <template>
 
-  <Options/>
+  <div v-show="rand > 0.7">
+    Сейчас меня видно
+  </div>
+  <!-- <div v-else-if="rand > 0.4">
+    Something else
+  </div>
+  <div v-else>
+    А теперь — нет
+  </div> -->
+
+  <Options />
 
   <select v-model="select">
     <option value="All">All</option>
@@ -20,9 +30,9 @@
     </template>
   </transition-group>
 
-  <VueCalc></VueCalc>
+  <VueCalc class="staticClass" :class="isActive ? 'myCalc' : ''"></VueCalc>
 
-  <HeaderComp>
+  <HeaderComp class="staticClass" :class="isActive ? 'myButton' : ''">
     <p>Вложенный тег</p>
     <hr>
     <p>Вложенный тег 2</p>
@@ -34,11 +44,11 @@
   <HeaderComp v-if="toggle" />
 
   {{ a }}
-  <button @click="toggle=!toggle; a++">{{ toggle?'hide':'show' }}</button>
+  <button @click="toggle = !toggle; a++; isActive = !isActive; hasError = !hasError">{{ toggle?'hide':'show' }}</button>
 
-  <div v-html="html"></div>
+  <div class="h1" :class="divClass" v-html="html"></div>
 
-  <textarea v-model="html" cols="30" rows="10"></textarea>
+  <textarea :class="isActive ? 'class1' : ''" v-model="html" cols="30" rows="10"></textarea>
 
   <hr>
 
@@ -52,6 +62,15 @@ import {ref, computed, watch, onMounted, onBeforeUnmount} from 'vue'
 const color = null
 const html = ref(`<h1>HTML code</h1>`)
 const newTodo = ref('')
+
+const rand = ref(Math.random())
+const isActive = ref(true)
+const hasError = ref(false)
+
+const divClass = computed(()=> {return {
+  active: isActive.value, 
+  error: hasError.value
+}})
 
 const a = ref(0)
 const select = ref('All')

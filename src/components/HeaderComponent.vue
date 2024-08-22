@@ -4,7 +4,7 @@
 
   <slot></slot>
 
-  <button v-on:click="myFunc" :style="'color:#' + color">Reverse</button>
+  <button :class="$attrs.class" v-on:click="myFunc" :style="'color:#' + color">Reverse</button>
 </template>
 
 <script setup lang="ts">
