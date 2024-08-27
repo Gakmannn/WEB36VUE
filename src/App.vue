@@ -12,6 +12,7 @@
 
   <Options />
 
+
   <select v-model="select">
     <option value="All">All</option>
     <option value="Learn">Learn</option>
@@ -29,6 +30,11 @@
       <ToDoElement :todo="todo" :index="index" class="list-item" />
     </template>
   </transition-group>
+  <template v-for="value, key, index of forObj">
+    <p>{{ index }}. {{ key }} - {{ value }}</p>
+  </template>
+  <ToDoElement :todo="{ text: 'Learn JavaScript' }" :index="1" class="list-item" />
+  <button @click="say('hi', $event)">Скажи hi</button>
 
   <VueCalc class="staticClass" :class="isActive ? 'myCalc' : ''"></VueCalc>
 
@@ -52,6 +58,32 @@
 
   <hr>
 
+  <!-- <span>Многострочное сообщение:</span>
+  <p style="white-space: pre-line;">{{ message1 }}</p>
+  <br />
+  <textarea v-model="message1" placeholder="введите несколько строчек"></textarea> -->
+
+  <div id="v-model-multiple-checkboxes">
+    <input type="checkbox" id="jack" value="Джек" v-model="checkedNames" />
+    <label for="jack">Джек</label>
+    <input type="checkbox" id="john" value="Джон" v-model="checkedNames" />
+    <label for="john">Джон</label>
+    <input type="checkbox" id="mike" value="Майк" v-model="checkedNames" />
+    <label for="mike">Майк</label>
+    <br />
+    <span>Отмеченные имена: {{ checkedNames }}</span>
+  </div>
+
+  <div id="v-model-radiobutton">
+    <input type="radio" id="one" value="Один" v-model="picked" />
+    <label for="one">Один</label>
+    <br />
+    <input type="radio" id="two" value="Два" v-model="picked" />
+    <label for="two">Два</label>
+    <br />
+    <span>Выбрано: {{ picked }}</span>
+  </div>
+
 </template>
 
 <script setup lang="ts">
@@ -66,6 +98,18 @@ const newTodo = ref('')
 const rand = ref(Math.random())
 const isActive = ref(true)
 const hasError = ref(false)
+const picked = ref('')
+
+
+const say = (text: string, e: Event) => {
+  console.log(text, e)
+}
+
+const forObj = ref({
+  title: 'How to do lists in Vue',
+  author: 'Jane Doe',
+  publishedAt: '2016-04-10'
+})
 
 const divClass = computed(()=> {return {
   active: isActive.value, 
@@ -76,6 +120,8 @@ const a = ref(0)
 const select = ref('All')
 const toggle = ref(true)
 const message = ref('')
+const message1 = ref('')
+const checkedNames = ref([])
 const todos = ref([
   { id: 0, text: 'Learn JavaScript' },
   { id: 1, text: 'Learn JavaScript' },
@@ -90,7 +136,6 @@ const addToDo = ()=>{
   })
   newTodo.value = ''
 }
-
 
 watch(() => select.value, async (newVal, oldVal)=>{
   console.log('old:', oldVal, 'new:', newVal)
