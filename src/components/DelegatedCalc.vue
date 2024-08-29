@@ -4,6 +4,9 @@
       <div style="font-size: 10px; height:12px; text-align: left;">{{ calcStr }}</div>
       <div style="font-size: 18px; height:20px; text-align: left;">{{ calcCurrentStr }}</div>
     </div>
+
+    <hr>
+
     <div style="display:flex">
       <button>1</button>
       <button>2</button>

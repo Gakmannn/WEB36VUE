@@ -1,10 +1,28 @@
 <template>
 
+  <component :is="myCount % 2 == 0 ? 'HeaderComp' : VueCalc"></component>
+  <component is="p">Это просто параграф</component>
+  
+  <!-- Options VueCalc-->
+
+  {{ myCount }}
+  {{ searchText3 }}
+  <CustomInputEasy v-model="searchText3" v-model:count="myCount">
+    <hr>
+    <p>Reds</p>
+  </CustomInputEasy>
+  {{ searchText2 }} <CustomInputComputed v-model="searchText2"></CustomInputComputed>
+  <!-- <CustomInput model-value="searchText"
+  @update:model-value="searchText = $event">
+  </CustomInput> -->
+  {{ searchText }}
+  <CustomInput id="search" labelText="Введите текст для поиска" v-model="searchText"></CustomInput>
+
   <div v-show="rand > 0.7">
     Сейчас меня видно
   </div>
   <!-- <div v-else-if="rand > 0.4">
-    Something else
+  Something else
   </div>
   <div v-else>
     А теперь — нет
@@ -27,7 +45,8 @@
   <transition-group name="list" tag="ul">
     <!-- <li v-for="todo, index of filteredArr" :key="index" class="list-item">{{ todo.text }}</li> -->
     <template v-for="todo, index of filteredArr" :key="todo.id">
-      <ToDoElement :todo="todo" :index="index" class="list-item" />
+      <ToDoElement :style="'font-size:' + fontSize +'px'" @textUp="(a,b,c,z) => fontSize += z"
+        @textDown="(n) => fontSize -= n" :todo="todo" :index="index" :func="delEl" class="list-item">del</ToDoElement>
     </template>
   </transition-group>
   <template v-for="value, key, index of forObj">
@@ -46,11 +65,12 @@
 
   <p v-bind:style="'color:'+color">{{ color }}</p>
   <input v-model="message" />
-
-  <HeaderComp v-if="toggle" />
+  <p>Этот 👇</p>
+  <header-comp v-if="toggle" />
 
   {{ a }}
-  <button @click="toggle = !toggle; a++; isActive = !isActive; hasError = !hasError">{{ toggle?'hide':'show' }}</button>
+  <button @click="toggle = !toggle; a++; isActive = !isActive; hasError = !hasError">{{ toggle?'hide':'show'
+    }}</button>
 
   <div class="h1" :class="divClass" v-html="html"></div>
 
@@ -87,6 +107,9 @@
 </template>
 
 <script setup lang="ts">
+import CustomInputEasy from './components/CustomInputEasy.vue'
+import CustomInputComputed from './components/CustomInputComputed.vue'
+import CustomInput from './components/CustomInput.vue'
 import Options from './components/HeaderOptionsApi.vue'
 import ToDoElement from './components/ToDoElement.vue'
 import VueCalc from './components/DelegatedCalc.vue'
@@ -94,12 +117,20 @@ import {ref, computed, watch, onMounted, onBeforeUnmount} from 'vue'
 const color = null
 const html = ref(`<h1>HTML code</h1>`)
 const newTodo = ref('')
+const searchText = ref('fdgldkf gjdf g')
+const searchText2 = ref('fdgldkf')
+const searchText3 = ref('f')
+const myCount = ref(1)
+
+const consoleFunc = (...e:any)=>{
+  console.log(e)
+}
 
 const rand = ref(Math.random())
 const isActive = ref(true)
 const hasError = ref(false)
 const picked = ref('')
-
+const fontSize = ref(12)
 
 const say = (text: string, e: Event) => {
   console.log(text, e)
@@ -129,6 +160,10 @@ const todos = ref([
   { id: 3, text: 'Build something awesome' }
 ])
 
+const delEl = (i: number) => {
+  todos.value.splice(i,1)
+}
+
 const addToDo = ()=>{
   todos.value.push({
     id: todos.value.length,
@@ -152,7 +187,9 @@ const filteredArr = computed(()=>{
   }
 })
 
-
+const q = [
+  { order: 1, question: 'why??', answers: ['becouse', 'what', `I dont'n know`], correctAnswer: `I dont'n know`}
+]
 
 // let key='apple'
 // console.log({
