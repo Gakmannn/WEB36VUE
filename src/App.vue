@@ -190,6 +190,7 @@ const filteredArr = computed(()=>{
 const q = [
   { order: 1, question: 'why??', answers: ['becouse', 'what', `I dont'n know`], correctAnswer: `I dont'n know`},
   { order: 1, question: 'why??', answers: ['becouse', 'what', `I dont'n know`], correctAnswer: `I dont'n know`},
+  { order: 1, question: 'why??', answers: ['becouse', 'what', `I dont'n know`], correctAnswer: `I dont'n know`},
 ]
 
 // let key='apple'
