@@ -1,9 +1,56 @@
 <template>
 
-  <component :is="myCount % 2 == 0 ? 'HeaderComp' : VueCalc"></component>
+  <main>
+    <app-child>
+      <img
+        src='https://images.unsplash.com/photo-1520182205149-1e5e4e7329b4?ixlib=rb-1.2.1&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=400&fit=max&ixid=eyJhcHBfaWQiOjE0NTg5fQ'
+        alt='image of a woman on a train'>
+    </app-child>
+  </main>
+
+
+  <button @click="show = !show">
+    Переключить отображение
+  </button>
+
+  <div style="height: 152px;margin-top:16px">
+    <transition appear name="slide-fade" mode="out-in">
+      <p v-if="show">привет</p>
+      <p v-else>пока</p>
+    </transition>
+
+    <transition name="bounce">
+      <p v-if="show">
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris facilisis
+        enim libero, at lacinia diam fermentum id. Pellentesque habitant morbi
+        tristique senectus et netus.
+      </p>
+    </transition>
+
+    <transition @before-enter="beforeEnter" @enter="enter" @leave="leave" :css="false">
+      <p v-if="show">
+        Демо
+      </p>
+    </transition>
+  </div>
+
+  <transition name="fade">
+    <component :is="myCount % 2 == 0 ? 'HeaderComp' : VueCalc"></component>
+  </transition>
   <component is="p">Это просто параграф</component>
-  
+
+  <img src="/images/vite.svg" alt="">
+
   <!-- Options VueCalc-->
+
+  <div id="demo">
+    Нажмите кнопку, чтобы сделать то, чего не должны делать:<br />
+
+    <div :class="{ shake: noActivated }">
+      <button @click="noActivated = true">Нажми меня</button>
+      <span v-if="noActivated">О, нет!</span>
+    </div>
+  </div>
 
   {{ myCount }}
   {{ searchText3 }}
@@ -66,7 +113,9 @@
   <p v-bind:style="'color:'+color">{{ color }}</p>
   <input v-model="message" />
   <p>Этот 👇</p>
-  <header-comp v-if="toggle" />
+  <transition name="fade">
+    <header-comp v-if="toggle" />
+  </transition>
 
   {{ a }}
   <button @click="toggle = !toggle; a++; isActive = !isActive; hasError = !hasError">{{ toggle?'hide':'show'
@@ -94,15 +143,9 @@
     <span>Отмеченные имена: {{ checkedNames }}</span>
   </div>
 
-  <div id="v-model-radiobutton">
-    <input type="radio" id="one" value="Один" v-model="picked" />
-    <label for="one">Один</label>
-    <br />
-    <input type="radio" id="two" value="Два" v-model="picked" />
-    <label for="two">Два</label>
-    <br />
-    <span>Выбрано: {{ picked }}</span>
-  </div>
+  <transition name="fade">
+    <AsyncComp />
+  </transition>
 
 </template>
 
@@ -113,7 +156,51 @@ import CustomInput from './components/CustomInput.vue'
 import Options from './components/HeaderOptionsApi.vue'
 import ToDoElement from './components/ToDoElement.vue'
 import VueCalc from './components/DelegatedCalc.vue'
-import {ref, computed, watch, onMounted, onBeforeUnmount} from 'vue'
+import AppChild from './components/AppChild.vue'
+import gsap from 'gsap'
+import { ref, computed, watch, onMounted, onBeforeUnmount, defineAsyncComponent } from 'vue'
+const AsyncComp = defineAsyncComponent(() =>
+  import('./components/RadioForm.vue')
+)
+
+
+
+function beforeEnter(el:any) {
+  gsap.set(el, {
+    scaleX: 0.8,
+    scaleY: 1.2
+  })
+}
+function enter(el:any, done:any) {
+  gsap.to(el, {
+    duration: 1,
+    scaleX: 1.5,
+    scaleY: 0.7,
+    opacity: 1,
+    x: 150,
+    ease: 'elastic.inOut(2.5, 1)',
+    onComplete: done
+  })
+}
+function leave(el: any, done: any) {
+  gsap.to(el, {
+    duration: 0.7,
+    scaleX: 1,
+    scaleY: 1,
+    x: 300,
+    ease: 'elastic.inOut(2.5, 1)'
+  })
+  gsap.to(el, {
+    duration: 0.2,
+    delay: 0.5,
+    opacity: 0,
+    onComplete: done
+  })
+}
+
+
+
+
 const color = null
 const html = ref(`<h1>HTML code</h1>`)
 const newTodo = ref('')
@@ -121,6 +208,9 @@ const searchText = ref('fdgldkf gjdf g')
 const searchText2 = ref('fdgldkf')
 const searchText3 = ref('f')
 const myCount = ref(1)
+const show = ref(false)
+
+const noActivated = ref(false)
 
 const consoleFunc = (...e:any)=>{
   console.log(e)
@@ -194,6 +284,14 @@ const q = [
   { order: 1, question: 'why??', answers: ['becouse', 'what', `I dont'n know`], correctAnswer: `I dont'n know`},
 ]
 
+const num = ref(0)
+const imgs = ['1.png', '2.png', '3.png']
+const imgs2 = [
+  {src:'1.png', alt:''}, 
+  {src:'2.png', alt:''}, 
+  {src:'3.png', alt:''}, 
+]
+
 // let key='apple'
 // console.log({
 //   [key]:5,
@@ -223,4 +321,90 @@ message.value = 'Hello Vue!'
 h1 {
   user-select: none;
 }
+.shake {
+  animation: shake 0.82s cubic-bezier(0.36, 0.07, 0.19, 0.97) both;
+  transform: translate3d(0, 0, 0);
+  backface-visibility: hidden;
+  perspective: 1000px;
+}
+
+@keyframes shake {
+
+  10%,
+  90% {
+    transform: translate3d(-1px, 0, 0);
+  }
+
+  20%,
+  80% {
+    transform: translate3d(2px, 0, 0);
+  }
+
+  30%,
+  50%,
+  70% {
+    transform: translate3d(-4px, 0, 0);
+  }
+
+  40%,
+  60% {
+    transform: translate3d(4px, 0, 0);
+  }
+}
+
+
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 1s ease;
+}
+
+.fade-enter-from,
+.fade-leave-to {
+  opacity: 0;
+}
+
+/* Анимации появления и исчезновения могут иметь    */
+/* различные продолжительности и функции плавности. */
+.slide-fade-enter-active {
+  transition: all 0.3s ease-out;
+}
+
+.slide-fade-leave-active {
+  transition: all 0.8s cubic-bezier(1, 0.5, 0.8, 1);
+}
+
+.slide-fade-enter-from,
+.slide-fade-leave-to {
+  transform: translateX(20px);
+  opacity: 0;
+}
+
+.bounce-enter-active {
+  animation: bounce-in 0.5s;
+}
+
+.bounce-leave-active {
+  animation: bounce-in 0.5s reverse;
+}
+
+@keyframes bounce-in {
+  0% {
+    transform: scale(0);
+  }
+
+  50% {
+    transform: scale(1.25);
+  }
+
+  100% {
+    transform: scale(1);
+  }
+}
+
+main {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
 </style>
