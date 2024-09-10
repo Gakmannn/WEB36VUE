@@ -88,13 +88,12 @@
   <form @submit.prevent="addToDo">
     <input v-model="newTodo" type="text">
   </form>
+  <button @click="shuffle">shufle</button>
 
   <transition-group name="list" tag="ul">
     <!-- <li v-for="todo, index of filteredArr" :key="index" class="list-item">{{ todo.text }}</li> -->
-    <template v-for="todo, index of filteredArr" :key="todo.id">
-      <ToDoElement :style="'font-size:' + fontSize +'px'" @textUp="(a,b,c,z) => fontSize += z"
+    <ToDoElement v-for="todo, index of filteredArr" :key="todo.id" :style="'font-size:' + fontSize +'px'" @textUp="(a,b,c,z) => fontSize += z"
         @textDown="(n) => fontSize -= n" :todo="todo" :index="index" :func="delEl" class="list-item">del</ToDoElement>
-    </template>
   </transition-group>
   <template v-for="value, key, index of forObj">
     <p>{{ index }}. {{ key }} - {{ value }}</p>
@@ -114,7 +113,9 @@
   <input v-model="message" />
   <p>Этот 👇</p>
   <transition name="fade">
-    <header-comp v-if="toggle" />
+    <header-comp v-if="toggle">
+      <h3>Not default</h3>
+    </header-comp>
   </transition>
 
   {{ a }}
@@ -269,6 +270,10 @@ watch(() => todos.value.length, async  (newVal, oldVal)=>{
   console.log('old:', oldVal, 'new:', newVal)
 })
 
+const shuffle = ()=>{
+  todos.value.sort((a,b)=>a.text.localeCompare(b.text))
+}
+
 const filteredArr = computed(()=>{
   if (select.value == 'All') {
     return todos.value
@@ -304,20 +309,29 @@ message.value = 'Hello Vue!'
 
 <style scoped>
 .list-item {
-    display: inline-block;
-    margin-right: 10px;
-  }
-
-.list-enter-active,
-.list-leave-active {
+  display: inline-block;
+  margin-right: 10px;
   transition: all 1s ease;
 }
 
+/* 1. объявление transition */
+.list-move,
+.list-enter-active,
+.list-leave-active {
+  transition: all 0.5s cubic-bezier(0.55, 0, 0.1, 1);
+}
+/* 2. объявление enter from и leave to состояний */
 .list-enter-from,
 .list-leave-to {
   opacity: 0;
-  transform: translateY(30px);
+  transform: scaleY(0.01) translate(30px, 0);
 }
+/* 3. убедитесь, что элементы удалены из потока layout,
+      чтобы можно было правильно рассчитать анимацию перемещения */
+.list-leave-active {
+  position: absolute;
+}
+
 h1 {
   user-select: none;
 }

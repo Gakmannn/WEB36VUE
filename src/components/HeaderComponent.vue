@@ -3,7 +3,9 @@
     <h1 v-if="bool" @click="str += '!'">{{ str }}</h1>
     <h1 v-else @click="str += '!'">{{ str.split('').reverse().join('') }}</h1>
 
-    <slot></slot>
+    <slot>
+    <h3>Header default</h3>
+    </slot>
 
     <button :class="$attrs.class" v-on:click="myFunc" :style="'color:#' + color">Reverse</button>
   </div>
