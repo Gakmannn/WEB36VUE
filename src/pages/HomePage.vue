@@ -148,13 +148,13 @@
 </template>
 
 <script setup lang="ts">
-import CustomInputEasy from '../components/CustomInputEasy.vue'
-import CustomInputComputed from '../components/CustomInputComputed.vue'
-import CustomInput from '../components/CustomInput.vue'
-import Options from '../components/HeaderOptionsApi.vue'
-import ToDoElement from '../components/ToDoElement.vue'
-import VueCalc from '../components/DelegatedCalc.vue'
-import AppChild from '../components/AppChild.vue'
+import CustomInputEasy from '#root/components/CustomInputEasy.vue'
+import CustomInputComputed from '#root/components/CustomInputComputed.vue'
+import CustomInput from '#root/components/CustomInput.vue'
+import Options from '#root/components/HeaderOptionsApi.vue'
+import ToDoElement from '#root/components/ToDoElement.vue'
+import VueCalc from '#root/components/DelegatedCalc.vue'
+import AppChild from '#root/components/AppChild.vue'
 import gsap from 'gsap'
 import { ref, computed, watch, onMounted, onBeforeUnmount, defineAsyncComponent } from 'vue'
 const AsyncComp = defineAsyncComponent(() =>
