@@ -1,150 +1,151 @@
 <template>
+  <div>
 
-  <h1>Main</h1>
+    <h1>Main</h1>
 
-  <main>
-    <app-child>
-      <img
-        src='https://images.unsplash.com/photo-1520182205149-1e5e4e7329b4?ixlib=rb-1.2.1&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=400&fit=max&ixid=eyJhcHBfaWQiOjE0NTg5fQ'
-        alt='image of a woman on a train'>
-    </app-child>
-  </main>
+    <main>
+      <app-child>
+        <img
+          src='https://images.unsplash.com/photo-1520182205149-1e5e4e7329b4?ixlib=rb-1.2.1&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=400&fit=max&ixid=eyJhcHBfaWQiOjE0NTg5fQ'
+          alt='image of a woman on a train'>
+      </app-child>
+    </main>
 
 
-  <button @click="show = !show">
-    Переключить отображение
-  </button>
+    <button @click="show = !show">
+      Переключить отображение
+    </button>
 
-  <div style="height: 152px;margin-top:16px">
-    <transition appear name="slide-fade" mode="out-in">
-      <p v-if="show">привет</p>
-      <p v-else>пока</p>
-    </transition>
+    <div style="height: 152px;margin-top:16px">
+      <transition appear name="slide-fade" mode="out-in">
+        <p v-if="show">привет</p>
+        <p v-else>пока</p>
+      </transition>
 
-    <transition name="bounce">
-      <p v-if="show">
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris facilisis
-        enim libero, at lacinia diam fermentum id. Pellentesque habitant morbi
-        tristique senectus et netus.
-      </p>
-    </transition>
+      <transition name="bounce">
+        <p v-if="show">
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris facilisis
+          enim libero, at lacinia diam fermentum id. Pellentesque habitant morbi
+          tristique senectus et netus.
+        </p>
+      </transition>
 
-    <transition @before-enter="beforeEnter" @enter="enter" @leave="leave" :css="false">
-      <p v-if="show">
-        Демо
-      </p>
-    </transition>
-  </div>
-
-  <transition name="fade">
-    <component :is="myCount % 2 == 0 ? 'HeaderComp' : VueCalc"></component>
-  </transition>
-  <component is="p">Это просто параграф</component>
-
-  <img src="/images/vite.svg" alt="">
-
-  <!-- Options VueCalc-->
-
-  <div id="demo">
-    Нажмите кнопку, чтобы сделать то, чего не должны делать:<br />
-
-    <div :class="{ shake: noActivated }">
-      <button @click="noActivated = true">Нажми меня</button>
-      <span v-if="noActivated">О, нет!</span>
+      <transition @before-enter="beforeEnter" @enter="enter" @leave="leave" :css="false">
+        <p v-if="show">
+          Демо
+        </p>
+      </transition>
     </div>
-  </div>
 
-  {{ myCount }}
-  {{ searchText3 }}
-  <CustomInputEasy v-model="searchText3" v-model:count="myCount">
-    <hr>
-    <p>Reds</p>
-  </CustomInputEasy>
-  {{ searchText2 }} <CustomInputComputed v-model="searchText2"></CustomInputComputed>
-  <!-- <CustomInput model-value="searchText"
+    <transition name="fade">
+      <component :is="myCount % 2 == 0 ? 'HeaderComp' : VueCalc"></component>
+    </transition>
+    <component is="p">Это просто параграф</component>
+
+    <img src="/images/vite.svg" alt="">
+
+    <!-- Options VueCalc-->
+
+    <div id="demo">
+      Нажмите кнопку, чтобы сделать то, чего не должны делать:<br />
+
+      <div :class="{ shake: noActivated }">
+        <button @click="noActivated = true">Нажми меня</button>
+        <span v-if="noActivated">О, нет!</span>
+      </div>
+    </div>
+
+    {{ myCount }}
+    {{ searchText3 }}
+    <CustomInputEasy v-model="searchText3" v-model:count="myCount">
+      <hr>
+      <p>Reds</p>
+    </CustomInputEasy>
+    {{ searchText2 }} <CustomInputComputed v-model="searchText2"></CustomInputComputed>
+    <!-- <CustomInput model-value="searchText"
   @update:model-value="searchText = $event">
   </CustomInput> -->
-  {{ searchText }}
-  <CustomInput id="search" labelText="Введите текст для поиска" v-model="searchText"></CustomInput>
+    {{ searchText }}
+    <CustomInput id="search" labelText="Введите текст для поиска" v-model="searchText"></CustomInput>
 
-  <div v-show="rand > 0.7">
-    Сейчас меня видно
-  </div>
-  <!-- <div v-else-if="rand > 0.4">
+    <div v-show="rand > 0.7">
+      Сейчас меня видно
+    </div>
+    <!-- <div v-else-if="rand > 0.4">
   Something else
   </div>
   <div v-else>
     А теперь — нет
   </div> -->
 
-  <Options />
+    <Options />
 
 
-  <select v-model="select">
-    <option value="All">All</option>
-    <option value="Learn">Learn</option>
-    <option value="Read">Read</option>
-    <option value="Build">Build</option>
-  </select>
+    <select v-model="select">
+      <option value="All">All</option>
+      <option value="Learn">Learn</option>
+      <option value="Read">Read</option>
+      <option value="Build">Build</option>
+    </select>
 
-  <form @submit.prevent="addToDo">
-    <input v-model="newTodo" type="text">
-  </form>
-  <button @click="shuffle">shufle</button>
+    <form @submit.prevent="addToDo">
+      <input v-model="newTodo" type="text">
+    </form>
+    <button @click="shuffle">shufle</button>
 
-  <transition-group name="list" tag="ul">
-    <!-- <li v-for="todo, index of filteredArr" :key="index" class="list-item">{{ todo.text }}</li> -->
-    <ToDoElement v-for="todo, index of filteredArr" :key="todo.id" :style="'font-size:' + fontSize + 'px'"
-      @textUp="(a, b, c, z) => fontSize += z" @textDown="(n) => fontSize -= n" :todo="todo" :index="index" :func="delEl"
-      class="list-item">del</ToDoElement>
-  </transition-group>
-  <template v-for="value, key, index of forObj">
-    <p>{{ index }}. {{ key }} - {{ value }}</p>
-  </template>
-  <ToDoElement :todo="{ text: 'Learn JavaScript' }" :index="1" class="list-item" />
-  <button @click="say('hi', $event)">Скажи hi</button>
+    <transition-group name="list" tag="ul">
+      <!-- <li v-for="todo, index of filteredArr" :key="index" class="list-item">{{ todo.text }}</li> -->
+      <ToDoElement v-for="todo, index of filteredArr" :key="todo.id" :style="'font-size:' + fontSize + 'px'"
+        @textUp="(a, b, c, z) => fontSize += z" @textDown="(n) => fontSize -= n" :todo="todo" :index="index"
+        :func="delEl" class="list-item">del</ToDoElement>
+    </transition-group>
+    <template v-for="value, key, index of forObj">
+      <p>{{ index }}. {{ key }} - {{ value }}</p>
+    </template>
+    <ToDoElement :todo="{ text: 'Learn JavaScript' }" :index="1" class="list-item" />
+    <button @click="say('hi', $event)">Скажи hi</button>
 
-  <VueCalc class="staticClass" :class="isActive ? 'myCalc' : ''"></VueCalc>
+    <VueCalc class="staticClass" :class="isActive ? 'myCalc' : ''"></VueCalc>
 
-  <p v-bind:style="'color:' + color">{{ color }}</p>
-  <input v-model="message" />
-  <p>Этот 👇</p>
-  <transition name="fade">
-    <header-comp v-if="toggle">
-      <h3>Not default</h3>
-    </header-comp>
-  </transition>
+    <p v-bind:style="'color:' + color">{{ color }}</p>
+    <input v-model="message" />
+    <p>Этот 👇</p>
+    <transition name="fade">
+      <header-comp v-if="toggle">
+        <h3>Not default</h3>
+      </header-comp>
+    </transition>
 
-  {{ a }}
-  <button @click="toggle = !toggle; a++; isActive = !isActive; hasError = !hasError">{{ toggle ? 'hide' : 'show'
-    }}</button>
+    {{ a }}
+    <button @click="toggle = !toggle; a++; isActive = !isActive; hasError = !hasError">{{ toggle ? 'hide' : 'show'
+      }}</button>
 
-  <div class="h1" :class="divClass" v-html="html"></div>
+    <div class="h1" :class="divClass" v-html="html"></div>
 
-  <textarea :class="isActive ? 'class1' : ''" v-model="html" cols="30" rows="10"></textarea>
+    <textarea :class="isActive ? 'class1' : ''" v-model="html" cols="30" rows="10"></textarea>
 
-  <hr>
+    <hr>
 
-  <!-- <span>Многострочное сообщение:</span>
+    <!-- <span>Многострочное сообщение:</span>
   <p style="white-space: pre-line;">{{ message1 }}</p>
   <br />
   <textarea v-model="message1" placeholder="введите несколько строчек"></textarea> -->
 
-  <div id="v-model-multiple-checkboxes">
-    <input type="checkbox" id="jack" value="Джек" v-model="checkedNames" />
-    <label for="jack">Джек</label>
-    <input type="checkbox" id="john" value="Джон" v-model="checkedNames" />
-    <label for="john">Джон</label>
-    <input type="checkbox" id="mike" value="Майк" v-model="checkedNames" />
-    <label for="mike">Майк</label>
-    <br />
-    <span>Отмеченные имена: {{ checkedNames }}</span>
+    <div id="v-model-multiple-checkboxes">
+      <input type="checkbox" id="jack" value="Джек" v-model="checkedNames" />
+      <label for="jack">Джек</label>
+      <input type="checkbox" id="john" value="Джон" v-model="checkedNames" />
+      <label for="john">Джон</label>
+      <input type="checkbox" id="mike" value="Майк" v-model="checkedNames" />
+      <label for="mike">Майк</label>
+      <br />
+      <span>Отмеченные имена: {{ checkedNames }}</span>
+    </div>
+
+    <transition name="fade">
+      <AsyncComp />
+    </transition>
   </div>
-
-  <transition name="fade">
-    <AsyncComp />
-  </transition>
-
 </template>
 
 <script setup lang="ts">
@@ -156,7 +157,7 @@ import ToDoElement from '#root/components/ToDoElement.vue'
 import VueCalc from '#root/components/DelegatedCalc.vue'
 import AppChild from '#root/components/AppChild.vue'
 import gsap from 'gsap'
-import { ref, computed, watch, onMounted, onBeforeUnmount, defineAsyncComponent } from 'vue'
+import { ref, computed, watch, defineAsyncComponent } from 'vue'
 const AsyncComp = defineAsyncComponent(() =>
   import('../components/RadioForm.vue')
 )

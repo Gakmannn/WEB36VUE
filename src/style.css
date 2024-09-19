@@ -57,6 +57,9 @@ button:focus-visible {
 .card {
   padding: 2em;
 }
+.underline {
+  text-decoration: underline;
+}
 
 #myApp {
   max-width: 1280px;
