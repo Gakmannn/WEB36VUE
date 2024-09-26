@@ -5,6 +5,7 @@ const routes = [
   {path: '/', name: 'home', alias: '/home', component: () => import('#root/pages/HomePage.vue') },
   { path: '/about', component: () => import('#root/pages/AboutPage.vue') },
   { path: '/books/:id?', component: () => import('#root/pages/BooksPage.vue'), props: true },
+  { path: '/idbm/:id?', component: () => import('#root/pages/IdbmPage.vue'), props: true },
   { path: '/user',
     children: [
       { path: '', component: () => import('#root/pages/UserPage.vue') },

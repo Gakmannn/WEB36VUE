@@ -1,21 +1,21 @@
 <template>
   <HeaderComp>
-    <RouterLink :to="{name:'home'}">На главную</RouterLink>
-    <RouterLink to="/about">About</RouterLink>
-    <RouterLink to="/books">Books</RouterLink>
-    <RouterLink to="/user">User</RouterLink>
+    <RouterLink class="link" :to="{name:'home'}">На главную</RouterLink>
+    <RouterLink class="link" to="/about">About</RouterLink>
+    <RouterLink class="link" to="/books">Books</RouterLink>
+    <RouterLink class="link" to="/user">User</RouterLink>
+    <RouterLink class="link" to="/idbm">Idbm</RouterLink>
     <button @click="navigate">navigate</button>
   </HeaderComp>
 
   <!-- {{ route }} -->
 
-  <p> Query: 
-  {{ $route.query }}
+  <!-- <p> Query:
+    {{ $route.query }}
   </p>
-  <p> Hash: 
-  {{ $route.hash }}
-  </p>
-
+  <p> Hash:
+    {{ $route.hash }}
+  </p> -->
   <RouterView v-if="$router.currentRoute.value.matched.length"></RouterView>
   <h1 v-else>Not found</h1>
   
@@ -45,5 +45,10 @@ const navigate = ()=>{
 .fade-enter-from,
 .fade-leave-to {
   opacity: 0;
+}
+
+.link {
+  display: inline-block;
+  margin: 0 10px;
 }
 </style>
