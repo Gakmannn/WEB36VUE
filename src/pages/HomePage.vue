@@ -109,7 +109,7 @@
 
     <p v-bind:style="'color:' + color">{{ color }}</p>
     <input v-model="message" />
-    <p>Этот 👇</p>
+    <p>Этот 👇 {{ counterStore.doubleCount }}</p>
     <transition name="fade">
       <header-comp v-if="toggle">
         <h3>Not default</h3>
@@ -158,6 +158,10 @@ import VueCalc from '#root/components/DelegatedCalc.vue'
 import AppChild from '#root/components/AppChild.vue'
 import gsap from 'gsap'
 import { ref, computed, watch, defineAsyncComponent } from 'vue'
+import { useCounterStore } from '#root/stores/counterCompos'
+const counterStore = useCounterStore()
+
+
 const AsyncComp = defineAsyncComponent(() =>
   import('../components/RadioForm.vue')
 )

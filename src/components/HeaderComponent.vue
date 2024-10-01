@@ -1,18 +1,22 @@
 <template>
   <div>
-    <h1 v-if="bool" @click="str += '!'">{{ str }}</h1>
-    <h1 v-else @click="str += '!'">{{ str.split('').reverse().join('') }}</h1>
+    <h1 v-if="bool" @click="str += '!'">{{ str }}{{ counterStore.count }}</h1>
+    <h1 v-else @click="str += '!'">{{ str.split('').reverse().join('') }}{{ counterStore.name }}</h1>
 
     <slot>
     <h3>Header default</h3>
     </slot>
 
     <button :class="$attrs.class" v-on:click="myFunc" :style="'color:#' + color">Reverse</button>
+    <button v-on:click="counterStore.increment" >Incr</button>
   </div>
 </template>
 
 <script setup lang="ts">
 import { ref, onBeforeMount, onBeforeUpdate, onMounted, onUnmounted, onUpdated, onBeforeUnmount } from 'vue'
+import { useCounter } from '#root/stores/counterOptions'
+
+const counterStore = useCounter()
 
 console.log('created')
 
