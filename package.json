@@ -12,11 +12,13 @@
     "@types/node": "^22.5.4",
     "axios": "^1.7.7",
     "gsap": "^3.12.5",
+    "md5": "^2.3.0",
     "pinia": "^2.2.4",
     "vue": "^3.4.15",
     "vue-router": "^4.4.4"
   },
   "devDependencies": {
+    "@types/md5": "^2.3.5",
     "@vitejs/plugin-vue": "^5.0.3",
     "typescript": "^5.2.2",
     "vite": "^5.1.0",
