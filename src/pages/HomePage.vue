@@ -1,6 +1,6 @@
 <template>
   <div>
-
+    <p>{{ x }}, {{ y }}</p>
     <h1>Main</h1>
 
     <main>
@@ -159,6 +159,8 @@ import AppChild from '#root/components/AppChild.vue'
 import gsap from 'gsap'
 import { ref, computed, watch, defineAsyncComponent } from 'vue'
 import { useCounterStore } from '#root/stores/counterCompos'
+import { useMouse } from '#root/composables/mouse'
+const {x,y} = useMouse()
 const counterStore = useCounterStore()
 
 

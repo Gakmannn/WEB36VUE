@@ -97,6 +97,7 @@ const calcEvents = (char:string) => {
 }
 
 onMounted(() => {
+  console.log(calc.value)
   calc.value.addEventListener('click', calcEventListner)
   document.addEventListener('keydown', calcKeybrd)
 })
