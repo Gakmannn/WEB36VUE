@@ -37,8 +37,10 @@
       </transition>
     </div>
 
-    <transition name="fade">
-      <component :is="myCount % 2 == 0 ? 'HeaderComp' : VueCalc"></component>
+    <transition name="fade" mode="out-in">
+      <KeepAlive >
+        <component :is="myCount % 2 == 0 ? 'HeaderComp' : VueCalc"></component>
+      </KeepAlive>
     </transition>
     <component is="p">Это просто параграф</component>
 
@@ -110,11 +112,10 @@
     <p v-bind:style="'color:' + color">{{ color }}</p>
     <input v-model="message" />
     <p>Этот 👇 {{ counterStore.doubleCount }}</p>
-    <transition name="fade">
-      <header-comp v-if="toggle">
-        <h3>Not default</h3>
-      </header-comp>
-    </transition>
+
+    <header-comp v-if="toggle">
+      <h3>Not default</h3>
+    </header-comp>
 
     {{ a }}
     <button @click="toggle = !toggle; a++; isActive = !isActive; hasError = !hasError">{{ toggle ? 'hide' : 'show'

@@ -1,0 +1,15 @@
+
+:root {
+  .theme_dark {
+    color: var(--main-color-dark);
+    background-color: var(--main-bg-color-dark);
+    
+    a:hover {
+      color: var(--main-a-hover-color-dark);
+    }
+    
+    button {
+      background-color: var(--main-button-bg-color-dark);
+    }
+  }
+}

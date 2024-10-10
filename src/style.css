@@ -74,13 +74,39 @@ button:focus-visible {
 
 @media (prefers-color-scheme: light) {
   :root {
-    color: #213547;
-    background-color: #ffffff;
+    color: var(--main-color-light);
+    background-color: var(--main-bg-color-light);
   }
   a:hover {
-    color: #747bff;
+    color: var(--main-a-hover-color-light);
   }
   button {
-    background-color: #f9f9f9;
+    background-color: var(--main-button-bg-color-light);
   }
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    color: var(--main-color-dark);
+    background-color: var(--main-bg-color-dark);
+  }
+  a:hover {
+    color: var(--main-a-hover-color-dark);
+  }
+  button {
+    background-color: var(--main-button-bg-color-dark);
+  }
+}
+
+
+:root.theme_dark {
+  color: var(--main-color-dark);
+  background-color: var(--main-bg-color-dark);
+}
+
+:root.theme_dark a:hover {
+  color: var(--main-a-hover-color-dark);
+}
+
+:root.theme_dark button {
+  background-color: var(--main-button-bg-color-dark);
 }
